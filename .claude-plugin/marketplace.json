@@ -13,12 +13,12 @@
     {
       "name": "universal",
       "source": "./plugins/universal",
-      "description": "Universal development tools: smart commit management, session documentation, session search/recall, and seamless context handoff across work sessions",
+      "description": "Universal development tools: smart commit management, session documentation with decision tracking, session search/recall, and seamless context handoff across work sessions",
       "version": "1.2.0",
       "author": {
         "name": "juninjune"
       },
-      "keywords": ["git", "commit", "documentation", "journal", "workflow", "search", "recall", "context", "handoff", "session-management"],
+      "keywords": ["git", "commit", "documentation", "journal", "workflow", "search", "recall", "context", "handoff", "session-management", "adr", "decision-tracking"],
       "category": "productivity"
     },
     {

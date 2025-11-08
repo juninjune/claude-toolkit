@@ -1,7 +1,7 @@
 {
   "name": "universal",
   "version": "1.2.0",
-  "description": "Universal development tools: smart commit management, session documentation, session search/recall, and seamless context handoff across work sessions",
+  "description": "Universal development tools: smart commit management, session documentation with decision tracking (ADR), session search/recall, and seamless context handoff across work sessions",
   "author": {
     "name": "juninjune"
   }
