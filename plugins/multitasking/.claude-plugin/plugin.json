@@ -1,0 +1,8 @@
+{
+  "name": "multitasking",
+  "version": "1.0.0",
+  "description": "Parallel development toolkit: git worktree management for running multiple Claude Code sessions simultaneously",
+  "author": {
+    "name": "juninjune"
+  }
+}
