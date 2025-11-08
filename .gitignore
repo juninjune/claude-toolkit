@@ -11,6 +11,7 @@ CLAUDE.md
 
 # 개발 세션 문서 (개인 로그)
 .dev-journal/
+.dev-decisions
 
 # 작업 공간 (미완성 플러그인, 실험)
 workspace/

@@ -1,21 +1,30 @@
 ---
 name: smart-commit
-description: Analyze git changes and create logical, well-structured commits grouped by issue/feature context. Use this skill when a coding session is complete and changes need to be committed. The skill analyzes git diff, groups related changes intelligently (prioritizing feature/issue cohesion over file type), and creates Conventional Commits with Korean descriptions suitable for junior developer education.
+description: "[AGENT-ONLY] Internal skill for analyzing git changes and creating logical commits. This skill should NEVER be invoked directly from main context. Only agents (like commit-agent) should use this skill. It operates independently using git commands and requires no session context."
 ---
 
-# Smart Commit
+# Smart Commit (Agent-Only)
+
+## ⚠️ Usage Restriction
+
+**THIS SKILL IS FOR AGENTS ONLY**
+
+- **DO NOT** invoke this skill directly from main context
+- **DO NOT** call this skill when user says "커밋 정리해줘" or similar
+- **DO** use the Task tool to launch commit-agent instead
+- **DO** let commit-agent invoke this skill autonomously
 
 ## Overview
 
 Analyze uncommitted git changes and create logical, atomic commits with well-structured Conventional Commits messages in Korean. This skill intelligently groups changes by feature/issue context first, then by file type, ensuring each commit represents one coherent logical change.
 
-## When to Use This Skill
+## When Agents Should Use This Skill
 
-Use this skill when:
-- A coding session is complete and there are uncommitted changes
-- Multiple unrelated changes exist in the working directory
-- Changes span multiple files and need to be organized into logical commits
-- The user says "커밋 정리해줘", "변경사항 커밋", "smart commit", or similar
+Agents should use this skill when:
+- Operating within commit-agent context
+- There are uncommitted changes to analyze
+- User has confirmed they want commits to be created
+- Multiple unrelated changes need to be organized into logical commits
 
 ## Workflow
 
@@ -39,7 +48,7 @@ Review all changes thoroughly to understand:
 Load the commit guidelines reference to understand grouping strategy:
 
 ```
-Read: .claude/skills/smart-commit/references/commit_guidelines.md
+Read: plugins/universal/skills/smart-commit/references/commit_guidelines.md
 ```
 
 This reference contains:
@@ -47,6 +56,8 @@ This reference contains:
 - Commit grouping decision tree
 - Body writing guidelines for junior developer education
 - Special cases (journal files, tests, config)
+
+**Note for agents**: Use the full path `plugins/universal/skills/smart-commit/references/commit_guidelines.md` when invoking this skill from an agent context.
 
 ### Step 3: Propose Commit Groups
 

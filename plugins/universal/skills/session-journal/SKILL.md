@@ -198,6 +198,38 @@ For sessions marking significant milestones, offer to update /memory with `--upd
 
 Only suggest memory update if the session contains genuinely memorable long-term facts.
 
+### 10. Offer Commit Organization
+
+After successfully creating the session document, check if there are uncommitted changes and offer to organize commits:
+
+**Process**:
+1. Run `git status --short` to check for uncommitted changes
+2. If changes exist (including the newly created journal file):
+   - Inform user: "세션 문서를 생성했습니다. 커밋을 정리할까요?"
+   - Wait for user confirmation
+   - If confirmed, use the Task tool to launch commit-agent
+
+**Example**:
+```
+✅ 세션 문서를 생성했습니다: .dev-journal/20251109_1430_agent-skill-integration.md
+
+현재 커밋되지 않은 변경사항이 있습니다. commit-agent를 실행해서 커밋을 정리할까요?
+```
+
+**Task tool invocation**:
+```
+Task tool:
+- description: "Organize git commits"
+- subagent_type: "general-purpose"
+- prompt: "Use commit-agent to organize uncommitted changes. The agent will invoke smart-commit skill to analyze git diff and create logical commits with Korean Conventional Commits messages."
+```
+
+**Important**:
+- Only offer if there are actual uncommitted changes
+- Always wait for user confirmation before launching agent
+- The agent operates independently and will handle the entire commit workflow
+- Do not invoke smart-commit skill directly - let commit-agent handle it
+
 ## Session Analysis Guide
 
 When writing the session document:
