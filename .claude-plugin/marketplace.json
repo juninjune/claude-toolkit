@@ -1,0 +1,14 @@
+{
+  "name": "jun-toolkit",
+  "owner": {
+    "name": "juninjune",
+    "url": "https://github.com/juninjune"
+  },
+  "plugins": [
+    {
+      "name": "universal",
+      "source": "./plugins/universal",
+      "description": "Universal development tools for all projects (git workflow, documentation)"
+    }
+  ]
+}

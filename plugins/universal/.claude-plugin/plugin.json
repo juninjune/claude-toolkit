@@ -1,0 +1,16 @@
+{
+  "name": "universal",
+  "version": "1.0.0",
+  "description": "Universal development tools: smart commit management and session documentation",
+  "author": "juninjune",
+  "skills": [
+    {
+      "name": "smart-commit",
+      "source": "./skills/smart-commit"
+    },
+    {
+      "name": "session-journal",
+      "source": "./skills/session-journal"
+    }
+  ]
+}
