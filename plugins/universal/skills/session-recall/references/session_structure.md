@@ -66,7 +66,7 @@ List of relevant files, documents, or resources referenced during the session.
 
 ## Keywords Index (README.md)
 
-The `.dev-journal/README.md` maintains a Keywords Index that tracks:
+The `.dev-docs/sessions/README.md` maintains a Keywords Index that tracks:
 
 1. **Keyword frequency**: How many times each keyword appears across sessions
 2. **Session mapping**: Which sessions contain each keyword

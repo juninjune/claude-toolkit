@@ -38,7 +38,7 @@ Expand user terms to related keywords based on domain knowledge:
 - "정리" → `organization`, `refactoring`, `cleanup`
 
 #### Stage 3: Keywords Index lookup
-1. Read `.dev-journal/README.md`
+1. Read `.dev-docs/sessions/README.md`
 2. Parse the "Keywords Index" section
 3. For each expanded keyword, check:
    - Exact match (highest priority)

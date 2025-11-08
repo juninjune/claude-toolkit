@@ -1,13 +1,13 @@
 ---
 name: session-recall
-description: Retrieve and analyze past work sessions from .dev-journal/ based on contextual keywords, time ranges, or work continuity. Use when users ask about previous work ("이전에 [맥락] 관련해서...", "어제 뭐 했었지?", "오늘 뭐 하면 될까?"), need to find past sessions, or want to continue incomplete tasks. Performs intelligent keyword matching even when users don't remember exact terms.
+description: Retrieve and analyze past work sessions from .dev-docs/sessions/ based on contextual keywords, time ranges, or work continuity. Use when users ask about previous work ("이전에 [맥락] 관련해서...", "어제 뭐 했었지?", "오늘 뭐 하면 될까?"), need to find past sessions, or want to continue incomplete tasks. Performs intelligent keyword matching even when users don't remember exact terms.
 ---
 
 # Session Recall
 
 ## Overview
 
-Retrieve and analyze past work sessions from `.dev-journal/` to maintain context across Claude Code sessions. This skill enables finding relevant sessions through contextual keyword matching, time-based filtering, and work continuity analysis—even when users don't remember exact keywords.
+Retrieve and analyze past work sessions from `.dev-docs/sessions/` to maintain context across Claude Code sessions. This skill enables finding relevant sessions through contextual keyword matching, time-based filtering, and work continuity analysis—even when users don't remember exact keywords.
 
 ## When to Use This Skill
 
@@ -68,7 +68,7 @@ The most common use case. Users often provide inexact or contextual keywords.
    ```bash
    python scripts/search_sessions.py \
      --keywords "smart-commit,commit-agent,git" \
-     --journal-dir /path/to/.dev-journal \
+     --journal-dir /path/to/.dev-docs/sessions \
      --max-results 5
    ```
 
@@ -98,7 +98,7 @@ Steps:
    요약: smart-commit 스킬을 에이전트 전용으로 전환하고 commit-agent를 신규 생성하여,
    커밋 작업이 메인 세션 컨텍스트를 소비하지 않도록 아키텍처 개선.
 
-   자세한 내용: .dev-journal/20251109_0503_agent-only-smart-commit.md
+   자세한 내용: .dev-docs/sessions/20251109_0503_agent-only-smart-commit.md
    ```
 
 **Edge case - No results**: If no sessions match, suggest alternative keywords from the Keywords Index in README.md or show recent sessions as fallback.
@@ -127,7 +127,7 @@ Find sessions within a specific time period.
    ```bash
    python scripts/search_sessions.py \
      --date-range "20251102,20251109" \
-     --journal-dir /path/to/.dev-journal
+     --journal-dir /path/to/.dev-docs/sessions
    ```
 
 3. **Present chronologically**:
@@ -144,7 +144,7 @@ Help users resume work from where they left off.
    ```bash
    python scripts/search_sessions.py \
      --recent 3 \
-     --journal-dir /path/to/.dev-journal
+     --journal-dir /path/to/.dev-docs/sessions
    ```
 
 2. **Read the most recent session file** using the Read tool
@@ -207,7 +207,7 @@ The `scripts/search_sessions.py` script is the primary tool for session retrieva
 ```bash
 python scripts/search_sessions.py \
   --keywords "keyword1,keyword2,keyword3" \
-  --journal-dir /path/to/.dev-journal \
+  --journal-dir /path/to/.dev-docs/sessions \
   --max-results 5
 ```
 
@@ -215,14 +215,14 @@ python scripts/search_sessions.py \
 ```bash
 python scripts/search_sessions.py \
   --date-range "20251101,20251109" \
-  --journal-dir /path/to/.dev-journal
+  --journal-dir /path/to/.dev-docs/sessions
 ```
 
 **Recent sessions**:
 ```bash
 python scripts/search_sessions.py \
   --recent 3 \
-  --journal-dir /path/to/.dev-journal
+  --journal-dir /path/to/.dev-docs/sessions
 ```
 
 **Output format**: JSON with session metadata and scores
@@ -231,7 +231,7 @@ python scripts/search_sessions.py \
   "results": [
     {
       "filename": "20251109_0503_agent-only-smart-commit.md",
-      "filepath": "/path/to/.dev-journal/20251109_0503_agent-only-smart-commit.md",
+      "filepath": "/path/to/.dev-docs/sessions/20251109_0503_agent-only-smart-commit.md",
       "title": "smart-commit을 에이전트 전용 스킬로 전환",
       "date": "2025-11-09 05:03",
       "keywords": ["smart-commit", "commit-agent", "agent-only-skill", ...],
@@ -267,7 +267,7 @@ Load these references when:
 1. **Always expand contextual keywords**: Don't search for user's exact words; expand to related domain terms
 2. **Prioritize recency for continuity queries**: Recent sessions are more relevant for "what's next" questions
 3. **Read full session files**: The script provides metadata, but reading the full file gives complete context
-4. **Use Keywords Index**: `.dev-journal/README.md` maintains a keyword frequency index—use it to discover related keywords
+4. **Use Keywords Index**: `.dev-docs/sessions/README.md` maintains a keyword frequency index—use it to discover related keywords
 5. **Combine strategies**: For complex queries, use keyword + time filtering together
 6. **Graceful fallbacks**: If no results, show recent sessions or suggest refining the query
 

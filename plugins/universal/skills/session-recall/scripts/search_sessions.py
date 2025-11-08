@@ -2,13 +2,13 @@
 """
 Session Search Script
 
-Searches .dev-journal/ sessions based on keywords, date ranges, or recency.
+Searches .dev-docs/sessions/ sessions based on keywords, date ranges, or recency.
 Returns matching sessions with relevance scores.
 
 Usage:
-    python search_sessions.py --keywords "smart-commit,git" --journal-dir /path/to/.dev-journal
-    python search_sessions.py --date-range "2025-11-08,2025-11-09" --journal-dir /path/to/.dev-journal
-    python search_sessions.py --recent 3 --journal-dir /path/to/.dev-journal
+    python search_sessions.py --keywords "smart-commit,git" --journal-dir /path/to/.dev-docs/sessions
+    python search_sessions.py --date-range "2025-11-08,2025-11-09" --journal-dir /path/to/.dev-docs/sessions
+    python search_sessions.py --recent 3 --journal-dir /path/to/.dev-docs/sessions
 """
 
 import argparse
@@ -255,8 +255,8 @@ def get_recent_sessions(
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Search .dev-journal sessions')
-    parser.add_argument('--journal-dir', required=True, help='Path to .dev-journal directory')
+    parser = argparse.ArgumentParser(description='Search .dev-docs/sessions sessions')
+    parser.add_argument('--journal-dir', required=True, help='Path to .dev-docs/sessions directory')
     parser.add_argument('--keywords', help='Comma-separated keywords to search')
     parser.add_argument('--date-range', help='Date range: YYYYMMDD,YYYYMMDD')
     parser.add_argument('--recent', type=int, help='Get N most recent sessions')
