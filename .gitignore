@@ -1,0 +1,67 @@
+# macOS
+.DS_Store
+
+# ===================================
+# LOCAL WORKSPACE (개발 환경)
+# ===================================
+
+# Claude Code 로컬 설정 (개발용)
+.claude/
+CLAUDE.md
+
+# 개발 세션 문서 (개인 로그)
+.dev-journal/
+
+# 작업 공간 (미완성 플러그인, 실험)
+workspace/
+
+# ===================================
+# DEPENDENCIES & BUILD
+# ===================================
+
+# Node
+node_modules/
+package-lock.json
+yarn.lock
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# ===================================
+# ENVIRONMENT & SECRETS
+# ===================================
+
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+
+# ===================================
+# IDE & EDITORS
+# ===================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===================================
+# TEMP & LOGS
+# ===================================
+
+*.log
+.tmp/
+temp/
+dist/
+build/

@@ -4,11 +4,22 @@
     "name": "juninjune",
     "url": "https://github.com/juninjune"
   },
+  "metadata": {
+    "description": "Jun's personal Claude Code toolkit for universal development workflows",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
   "plugins": [
     {
       "name": "universal",
       "source": "./plugins/universal",
-      "description": "Universal development tools for all projects (git workflow, documentation)"
+      "description": "Universal development tools: smart commit management and session documentation",
+      "version": "1.0.0",
+      "author": {
+        "name": "juninjune"
+      },
+      "keywords": ["git", "commit", "documentation", "journal", "workflow"],
+      "category": "productivity"
     }
   ]
 }
