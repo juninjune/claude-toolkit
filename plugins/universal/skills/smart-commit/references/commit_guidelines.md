@@ -75,7 +75,7 @@ feat(ocr): 해상도 최적화 로직 구현
 - OCR 성능 테스트 결과를 문서에 기록
 - 개발 저널에 최적화 과정 추가
 
-Files: lib/screens/text_extraction_test.dart, .dev-journal/20251109_0111_ocr-resolution-optimization.md
+Files: lib/screens/text_extraction_test.dart, .dev-docs/sessions/20251109_0111_ocr-resolution-optimization.md
 ```
 
 **Example 2: Documentation Update**
@@ -85,7 +85,7 @@ docs(journal): OCR 구현 과정 정리
 - 바운딩 박스 시각화 과정 문서화
 - 이슈 해결 과정 및 결과 추가
 
-Files: .dev-journal/20251108_0620_ocr-bounding-box-visualization.md, .dev-journal/README.md
+Files: .dev-docs/sessions/20251108_0620_ocr-bounding-box-visualization.md, .dev-docs/sessions/README.md
 ```
 
 **Example 3: Configuration Changes**

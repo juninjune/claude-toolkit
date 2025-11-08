@@ -82,7 +82,7 @@ Present the proposal in a clear, structured format:
 ### Commit 1: feat(ocr): 해상도 최적화 로직 구현
 **Files:**
 - lib/screens/text_extraction_test.dart
-- .dev-journal/20251109_0111_ocr-resolution-optimization.md
+- .dev-docs/sessions/20251109_0111_ocr-resolution-optimization.md
 
 **Rationale:**
 코드 변경과 문서화가 같은 OCR 해상도 최적화 작업에 속하므로 함께 커밋합니다.
