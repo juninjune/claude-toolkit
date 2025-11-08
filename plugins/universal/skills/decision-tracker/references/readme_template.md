@@ -9,7 +9,7 @@ This directory captures **significant decisions and issues** that shape the proj
 - **Issues**: Critical bugs, performance problems, security incidents
 - **Status tracking**: Active, Deprecated, Superseded decisions
 
-Unlike `.dev-journal/` which logs all work sessions, this directory focuses on **milestone decisions** that have long-term impact.
+Unlike `.dev-docs/sessions/` which logs all work sessions, this directory focuses on **milestone decisions** that have long-term impact.
 
 ## Index
 

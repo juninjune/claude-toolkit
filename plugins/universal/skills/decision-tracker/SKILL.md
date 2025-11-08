@@ -9,7 +9,7 @@ description: Track critical technical decisions, architecture changes, and major
 
 Capture and track milestone decisions that shape the project's long-term direction. Unlike session-journal which logs all work sessions, decision-tracker focuses on **significant decisions, critical issues, and architecture changes** that require long-term visibility.
 
-Decision documents are stored in `.dev-decisions/` using ADR (Architecture Decision Record) format, with automatic cross-linking to related sessions.
+Decision documents are stored in `.dev-docs/adr/` using ADR (Architecture Decision Record) format, with automatic cross-linking to related sessions.
 
 ## When to Use
 
@@ -67,20 +67,20 @@ Determine document type:
 - **ADR**: For decisions (library choices, architecture, patterns)
 - **Issue**: For critical problems and their resolutions
 
-### 3. Initialize `.dev-decisions/` Structure
+### 3. Initialize `.dev-docs/adr/` Structure
 
-If `.dev-decisions/` doesn't exist:
+If `.dev-docs/adr/` doesn't exist:
 ```bash
-mkdir -p .dev-decisions
+mkdir -p .dev-docs/adr
 ```
 
 If `README.md` doesn't exist, create it using `references/readme_template.md`.
 
 ### 4. Determine Next Number
 
-Find the highest existing number in `.dev-decisions/`:
+Find the highest existing number in `.dev-docs/adr/`:
 ```bash
-ls .dev-decisions/ | grep -E '^[0-9]{4}-' | sort -r | head -1
+ls .dev-docs/adr/ | grep -E '^[0-9]{4}-' | sort -r | head -1
 ```
 
 Increment by 1 (e.g., if highest is `0003-`, next is `0004-`).
@@ -143,7 +143,7 @@ Use template from `references/issue_template.md` and populate:
 Add link to the session that triggered this decision:
 ```markdown
 ## Related Sessions
-- [20251109_0434](../.dev-journal/20251109_0434_riverpod-setup.md) - Riverpod 초기 설정 및 테스트
+- [20251109_0434](../sessions/20251109_0434_riverpod-setup.md) - Riverpod 초기 설정 및 테스트
 ```
 
 #### In Session Document
@@ -152,14 +152,14 @@ Add link to the decision document in the session file's appropriate section:
 ```markdown
 ## Key Decisions
 - Riverpod를 상태관리 라이브러리로 채택
-  - **Decision**: [ADR-0001: Adopt Riverpod](../.dev-decisions/0001-adopt-riverpod.md)
+  - **Decision**: [ADR-0001: Adopt Riverpod](../adr/0001-adopt-riverpod.md)
 ```
 
 Create **bidirectional links** - both session → decision and decision → session.
 
 ### 7. Update README.md
 
-Update `.dev-decisions/README.md` with:
+Update `.dev-docs/adr/README.md` with:
 
 #### Index by Status
 
@@ -200,7 +200,7 @@ After creating the decision document, return control to session-journal to compl
 When users query past decisions:
 
 1. **Parse Query**: Extract keywords from user request
-2. **Search `.dev-decisions/`**: Use grep or file listing
+2. **Search `.dev-docs/adr/`**: Use grep or file listing
 3. **Read Relevant Documents**: Load decision documents
 4. **Summarize**: Provide concise summary of:
    - What was decided
@@ -214,26 +214,26 @@ When users query past decisions:
 User: "이전에 상태관리 선택할 때 왜 Riverpod 골랐지?"
 
 1. Keywords: ["상태관리", "Riverpod", "선택"]
-2. Search: grep -r "Riverpod" .dev-decisions/
+2. Search: grep -r "Riverpod" .dev-docs/adr/
 3. Found: 0001-adopt-riverpod.md
 4. Read and summarize:
    "Riverpod를 선택한 이유는 GetX에 비해 type-safe하고,
     compile-time 에러 감지가 가능하며, 테스트하기 쉽기 때문입니다.
     Trade-off는 초기 학습 곡선이 있다는 점입니다."
-5. Link: .dev-decisions/0001-adopt-riverpod.md
+5. Link: .dev-docs/adr/0001-adopt-riverpod.md
 ```
 
 ## File Organization
 
 ```
-/.dev-decisions/
+/.dev-docs/adr/
 ├── README.md                              # Index by status, tags, timeline
 ├── 0001-adopt-riverpod.md                # ADR document
 ├── 0002-impeller-memory-leak.md          # Issue document
 └── 0003-migrate-to-graphql.md            # Architecture change ADR
 ```
 
-Keep all decision files flat in `.dev-decisions/` - no subdirectories.
+Keep all decision files flat in `.dev-docs/adr/` - no subdirectories.
 
 ## Decision Status Lifecycle
 
@@ -279,4 +279,4 @@ Standard ADR template following Architecture Decision Record format.
 Template for documenting critical issues and their resolutions.
 
 ### references/readme_template.md
-Template for initializing `.dev-decisions/README.md` with index structure.
+Template for initializing `.dev-docs/adr/README.md` with index structure.
