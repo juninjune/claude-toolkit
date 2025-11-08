@@ -13,12 +13,12 @@
     {
       "name": "universal",
       "source": "./plugins/universal",
-      "description": "Universal development tools: smart commit management and session documentation",
-      "version": "1.0.0",
+      "description": "Universal development tools: smart commit management, session documentation, and session search/recall across work sessions",
+      "version": "1.1.0",
       "author": {
         "name": "juninjune"
       },
-      "keywords": ["git", "commit", "documentation", "journal", "workflow"],
+      "keywords": ["git", "commit", "documentation", "journal", "workflow", "search", "recall", "context"],
       "category": "productivity"
     }
   ]
