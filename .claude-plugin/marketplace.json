@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Jun's personal Claude Code toolkit for universal development workflows",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
@@ -19,6 +19,17 @@
         "name": "juninjune"
       },
       "keywords": ["git", "commit", "documentation", "journal", "workflow"],
+      "category": "productivity"
+    },
+    {
+      "name": "multitasking",
+      "source": "./plugins/multitasking",
+      "description": "Parallel development toolkit: git worktree management for running multiple Claude Code sessions simultaneously",
+      "version": "1.0.0",
+      "author": {
+        "name": "juninjune"
+      },
+      "keywords": ["git", "worktree", "parallel", "multitasking", "concurrent"],
       "category": "productivity"
     }
   ]
