@@ -26,7 +26,9 @@ claude-toolkit/
 ### 로컬에만 존재 (Not in Git)
 ```
 claude-toolkit/
-├── .dev-journal/                  # 개발 세션 문서
+├── .dev-docs/                     # 개발 문서
+│   ├── sessions/                  # 세션 로그 (작업 이력)
+│   └── adr/                       # Architecture Decision Records
 ├── .claude/                       # 로컬 Claude Code 설정
 │   ├── settings.json
 │   ├── commands/                  # 개발용 커맨드
@@ -53,8 +55,10 @@ claude-toolkit/
 
 ### 로컬 전용 폴더
 
-#### `.dev-journal/`
-이 저장소를 개발하면서 생성되는 세션 문서. 개발 과정 기록.
+#### `.dev-docs/`
+이 저장소를 개발하면서 생성되는 문서들:
+- `sessions/`: 세션별 작업 기록 (YYYYMMDD_HHMM 형식)
+- `adr/`: 주요 결정사항 및 이슈 기록 (ADR 형식)
 
 #### `.claude/`
 이 저장소 자체를 개발할 때 사용하는 Claude Code 설정:
@@ -117,7 +121,7 @@ git push
 ## 주의사항
 
 - **절대 커밋하지 말 것**:
-  - `.dev-journal/`: 개인 개발 로그
+  - `.dev-docs/`: 개인 개발 문서 (세션 로그, ADR)
   - `.claude/`: 로컬 개발 설정
   - `workspace/`: 작업 중인 미완성 코드, 개발 참고 자료
   - `.env`: 환경 변수 (있다면)
@@ -139,7 +143,9 @@ claude-toolkit/
 │   └── flutter/                  ✅ Git (향후)
 ├── README.md                      ✅ Git
 │
-├── .dev-journal/                  ❌ Git (로컬)
+├── .dev-docs/                     ❌ Git (로컬)
+│   ├── sessions/                  # 세션 로그
+│   └── adr/                       # Architecture Decision Records
 ├── .claude/                       ❌ Git (로컬)
 ├── workspace/                     ❌ Git (로컬)
 │   ├── drafts/

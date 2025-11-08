@@ -51,7 +51,9 @@ claude-toolkit/
 ### Local Only (Not in Git)
 ```
 claude-toolkit/
-├── .dev-journal/                 # Development session logs
+├── .dev-docs/                    # Development documentation
+│   ├── sessions/                 # Session logs (work history)
+│   └── adr/                      # Architecture Decision Records
 ├── .claude/                      # Local Claude Code settings
 └── workspace/                    # Development workspace
     ├── drafts/                   # Work-in-progress plugins
