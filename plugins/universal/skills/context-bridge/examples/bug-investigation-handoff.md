@@ -8,7 +8,7 @@ User is investigating a memory leak in a React dashboard. After 2 hours of debug
 
 ## Original Session Context
 
-**Session**: `.dev-journal/20251109_1615_memory-leak-investigation.md`
+**Session**: `.dev-docs/sessions/20251109_1615_memory-leak-investigation.md`
 
 **What happened** (summary):
 - User reported: Dashboard crashes after ~30 minutes of use
@@ -30,7 +30,7 @@ User is investigating a memory leak in a React dashboard. After 2 hours of debug
 ```markdown
 ## 이전 세션 연속 작업
 
-**세션 기록**: `.dev-journal/20251109_1615_memory-leak-investigation.md`
+**세션 기록**: `.dev-docs/sessions/20251109_1615_memory-leak-investigation.md`
 
 ### 작업 목표
 대시보드 페이지에서 발생하는 메모리 누수를 수정하여 장시간 사용 시 브라우저 크래시 방지
@@ -107,7 +107,7 @@ User is investigating a memory leak in a React dashboard. After 2 hours of debug
 
 ### Deep Context Preserved
 
-**In session file** `.dev-journal/20251109_1615_memory-leak-investigation.md`:
+**In session file** `.dev-docs/sessions/20251109_1615_memory-leak-investigation.md`:
 - Full investigation timeline (which components checked first)
 - Dead ends explored (UserTable was suspected but ruled out)
 - Memory profiler screenshots/data

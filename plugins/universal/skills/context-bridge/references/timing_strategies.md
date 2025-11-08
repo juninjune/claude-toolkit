@@ -205,7 +205,7 @@ Session 1 → 80% → handoff → Session 2 → 80% → handoff → Session 3
 ```
 
 **Action**:
-- Reference original session: "**원본 세션**: `.dev-journal/[first_session].md`"
+- Reference original session: "**원본 세션**: `.dev-docs/sessions/[first_session].md`"
 - Consolidate context if possible (don't keep expanding)
 - Suggest task decomposition to user
 

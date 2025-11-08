@@ -13,7 +13,7 @@ Think of it as a **memory aid**, not a tutorial.
 
 ## Input: Full Session Document
 
-Context-bridge receives a complete `.dev-journal/YYYYMMDD_HHMM_topic-slug.md` file with:
+Context-bridge receives a complete `.dev-docs/sessions/YYYYMMDD_HHMM_topic-slug.md` file with:
 - Full conversation history (implicitly in Claude's context)
 - Summary section
 - Keywords

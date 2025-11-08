@@ -7,7 +7,7 @@ description: Manage context exhaustion by transitioning to a new session with st
 
 ## Overview
 
-Context-bridge enables seamless work continuation across Claude Code sessions when context windows become exhausted. Unlike `/compact` which compresses conversation history within the same session, context-bridge performs a **lossless session handoff**: documenting the current session completely in `.dev-journal/`, then generating a minimal handoff message to start a fresh session with only essential context.
+Context-bridge enables seamless work continuation across Claude Code sessions when context windows become exhausted. Unlike `/compact` which compresses conversation history within the same session, context-bridge performs a **lossless session handoff**: documenting the current session completely in `.dev-docs/sessions/`, then generating a minimal handoff message to start a fresh session with only essential context.
 
 ## When to Use This Skill
 
@@ -55,7 +55,7 @@ If user declines, continue current session.
 /skill universal:session-journal
 ```
 
-This creates a timestamped markdown file in `.dev-journal/` with:
+This creates a timestamped markdown file in `.dev-docs/sessions/` with:
 - Full conversation context
 - Keyword extraction
 - Related session links
@@ -104,7 +104,7 @@ Example:
 **Extraction Rules**:
 - Keep it **minimal**: Only what's needed to resume work
 - No code snippets (files are in the codebase)
-- No detailed explanations (full context is in `.dev-journal/`)
+- No detailed explanations (full context is in `.dev-docs/sessions/`)
 - Focus on **actionable information**
 
 ### Step 4: Generate Handoff Message
@@ -115,7 +115,7 @@ Create a structured message for the user to paste in the new session:
 ```markdown
 ## 이전 세션 연속 작업
 
-**세션 기록**: `.dev-journal/[YYYYMMDD_HHMM_topic-slug].md`
+**세션 기록**: `.dev-docs/sessions/[YYYYMMDD_HHMM_topic-slug].md`
 
 ### 작업 목표
 [1-2 sentence goal]
@@ -153,7 +153,7 @@ Provide clear instructions:
 3. 새 세션을 시작하고 복사한 메시지를 붙여넣으세요
 4. 작업을 계속 진행하세요
 
-전체 작업 맥락은 `.dev-journal/[filename].md`에 저장되었습니다.
+전체 작업 맥락은 `.dev-docs/sessions/[filename].md`에 저장되었습니다.
 필요시 `session-recall` 스킬로 참조할 수 있습니다.
 ```
 
@@ -179,7 +179,7 @@ Find a **natural breakpoint** (task completed, decision made, safe state).
 
 ### 4. Don't Overload Handoff
 Resist the urge to include everything. If user needs more context, they can:
-- Read the full session file in `.dev-journal/`
+- Read the full session file in `.dev-docs/sessions/`
 - Use `session-recall` skill
 - Read the relevant files directly
 
@@ -211,7 +211,7 @@ If token limit is hit during context-bridge execution:
 If user needs multiple session transitions:
 - Each session gets documented separately
 - Handoff message should reference the original session as "root context"
-- Example: "**원본 세션**: `.dev-journal/[first_session].md`"
+- Example: "**원본 세션**: `.dev-docs/sessions/[first_session].md`"
 
 ## Common Pitfalls
 

@@ -8,7 +8,7 @@ User is refactoring 10 REST API endpoints to standardize error handling and add 
 
 ## Original Session Context
 
-**Session**: `.dev-journal/20251109_1423_api-error-handling-refactor.md`
+**Session**: `.dev-docs/sessions/20251109_1423_api-error-handling-refactor.md`
 
 **What happened** (summary):
 - Created common error handler `handleApiError()` in `src/utils/errorHandler.ts`
@@ -24,7 +24,7 @@ User is refactoring 10 REST API endpoints to standardize error handling and add 
 ```markdown
 ## 이전 세션 연속 작업
 
-**세션 기록**: `.dev-journal/20251109_1423_api-error-handling-refactor.md`
+**세션 기록**: `.dev-docs/sessions/20251109_1423_api-error-handling-refactor.md`
 
 ### 작업 목표
 REST API 엔드포인트 10개에 표준화된 에러 핸들링과 인증 미들웨어를 적용하여 일관된 에러 응답과 보안 강화
@@ -83,7 +83,7 @@ catch 블록에서 `handleApiError(error, res)` 호출.
    ```
    ## 이전 세션 연속 작업
 
-   **세션 기록**: `.dev-journal/20251109_1423_api-error-handling-refactor.md`
+   **세션 기록**: `.dev-docs/sessions/20251109_1423_api-error-handling-refactor.md`
 
    ### 작업 목표
    ...
@@ -141,7 +141,7 @@ catch 블록에서 `handleApiError(error, res)` 호출.
 ### With Context-Bridge
 
 **Result**:
-- Full session preserved in `.dev-journal/20251109_1423_api-error-handling-refactor.md`
+- Full session preserved in `.dev-docs/sessions/20251109_1423_api-error-handling-refactor.md`
 - Minimal handoff message (5% of context)
 - Clear reference to completed pattern
 - Fresh 200,000 token budget
@@ -155,8 +155,8 @@ If the refactoring requires a third session:
 ```markdown
 ## 이전 세션 연속 작업
 
-**원본 세션**: `.dev-journal/20251109_1423_api-error-handling-refactor.md`
-**이전 세션**: `.dev-journal/20251109_1512_api-refactor-continued.md`
+**원본 세션**: `.dev-docs/sessions/20251109_1423_api-error-handling-refactor.md`
+**이전 세션**: `.dev-docs/sessions/20251109_1512_api-refactor-continued.md`
 
 ### 작업 목표
 REST API 엔드포인트 10개에 표준화된 에러 핸들링과 인증 미들웨어를 적용 (계속)
