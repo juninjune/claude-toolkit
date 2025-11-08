@@ -5,7 +5,8 @@
     ".env.local",
     ".claude/",
     ".cursor/",
-    ".vscode/"
+    ".vscode/",
+    "CLAUDE.md"
   ],
   "ide": "cursor",
   "autoOpen": true,

@@ -1,6 +1,6 @@
 ---
 name: worktree-agent
-description: Autonomous agent for managing git worktrees to enable parallel development workflows. Use this agent when user requests worktree operations ("worktree 만들어줘", "worktree 병합해줘", "worktree 정리해줘", "worktree list"). The agent coordinates between multiple worktree skills to provide seamless parallel development support.
+description: Autonomous agent for managing git worktrees to enable parallel development workflows. Use this agent when user requests worktree operations ("worktree 만들어줘", "worktree 병합해줘", "worktree 정리해줘", "worktree list", "워크트리 설정"). The agent coordinates between multiple worktree skills and configuration management to provide seamless parallel development support.
 ---
 
 # Worktree Agent
@@ -24,6 +24,7 @@ Launch this agent when user requests:
 - **List**: "worktree list", "worktree 목록", "워크트리 보여줘"
 - **Merge**: "worktree 병합해줘", "워크트리 머지"
 - **Cleanup**: "worktree 정리해줘 [branch-name]", "워크트리 제거"
+- **Config**: "워크트리 설정", "worktree 설정 초기화", "워크트리 설정 업데이트"
 
 ## Agent Workflows
 
@@ -45,7 +46,33 @@ Launch this agent when user requests:
    - Report error: "Git 저장소가 아닙니다"
    - Exit agent
 
-3. **Check existing worktrees**
+3. **Check for configuration file**
+   ```bash
+   Read: .claude/worktree-config.json
+   ```
+
+   **If config does not exist**:
+   - Check if this would be the first worktree:
+     ```bash
+     git worktree list | wc -l
+     ```
+   - If first worktree (only main repo exists), offer to create config:
+     ```
+     ⚙️  워크트리 설정 파일이 없습니다.
+
+     프로젝트별 설정을 생성하면 다음을 커스터마이징할 수 있습니다:
+     - 워크트리 저장 위치
+     - 복사할 파일 목록 (.env, .claude/ 등)
+     - 선호하는 IDE (cursor/code)
+
+     기본 설정으로 시작할까요? (yes/no)
+     - yes: 기본 설정 생성 후 진행
+     - no: 기본 설정 없이 진행 (매번 동일한 기본값 사용)
+     ```
+   - If user says "yes", create default config (→ Jump to Workflow 5)
+   - If user says "no" or config exists, proceed
+
+4. **Check existing worktrees**
    ```bash
    git worktree list
    ```
@@ -53,7 +80,7 @@ Launch this agent when user requests:
    - If exists: Report error with existing worktree info
    - If not: Proceed
 
-4. **Invoke worktree-create skill**
+5. **Invoke worktree-create skill**
    ```
    Skill: worktree-create
    ```
@@ -259,6 +286,225 @@ Launch this agent when user requests:
 
 ---
 
+### Workflow 5: Manage Configuration
+
+**User request**: "워크트리 설정" or "worktree 설정 초기화" or "워크트리 설정 업데이트"
+
+**Agent actions**:
+
+1. **Validate git repository**
+   ```bash
+   git rev-parse --is-inside-work-tree
+   ```
+   If not a git repo:
+   - Report error: "Git 저장소가 아닙니다"
+   - Exit agent
+
+2. **Check for existing configuration**
+   ```bash
+   Read: .claude/worktree-config.json
+   ```
+
+3. **Determine operation mode**
+
+   **Mode A: Config exists**
+   ```
+   현재 워크트리 설정:
+
+   📁 워크트리 디렉토리: ../{repo}_worktrees
+   📋 복사할 파일: .env, .env.local, .claude/, .cursor/, .vscode/
+   💻 기본 IDE: cursor
+   🚀 자동 열기: yes
+   🌿 메인 브랜치: main
+
+   무엇을 하시겠습니까?
+   1. 복사할 파일 목록 수정
+   2. IDE 설정 변경
+   3. 전체 설정 재생성
+   4. 설정 파일 삭제
+   ```
+
+   Wait for user choice.
+
+   **Mode B: Config does not exist**
+   ```
+   ⚙️  워크트리 설정 파일이 없습니다.
+
+   기본 설정을 생성할까요?
+
+   포함될 기본 설정:
+   - 워크트리 위치: ../{repo}_worktrees
+   - 복사할 파일: .env, .env.local, .claude/, .cursor/, .vscode/
+   - IDE: cursor
+   - 자동 열기: yes
+
+   생성하시겠습니까? (yes/no)
+   ```
+
+4. **Execute selected operation**
+
+   **Operation 1: 복사할 파일 목록 수정**
+
+   a. Show current copyFiles list:
+   ```
+   현재 복사 대상 파일:
+   1. .env
+   2. .env.local
+   3. .claude/
+   4. .cursor/
+   5. .vscode/
+
+   어떤 파일/디렉토리를 추가하거나 제거하시겠습니까?
+
+   예시:
+   - 추가: "config/ 추가해줘"
+   - 제거: ".vscode/ 제거해줘"
+   - 전체 수정: "목록을 .env, .claude/, .cursor/로 변경해줘"
+   ```
+
+   b. Parse user input to detect:
+   - Add operation: "X 추가", "add X"
+   - Remove operation: "X 제거", "remove X", "X 빼줘"
+   - Replace operation: "목록을 X, Y, Z로 변경"
+
+   c. Update config file:
+   ```bash
+   Edit: .claude/worktree-config.json
+   ```
+
+   d. Confirm changes:
+   ```
+   ✅ 설정이 업데이트되었습니다!
+
+   업데이트된 복사 대상:
+   - .env
+   - .env.local
+   - .claude/
+   - .cursor/
+   - config/
+
+   다음 워크트리 생성부터 이 설정이 적용됩니다.
+   ```
+
+   **Operation 2: IDE 설정 변경**
+
+   a. Ask for preference:
+   ```
+   어떤 IDE를 사용하시겠습니까?
+   1. cursor
+   2. code (VS Code)
+   3. none (자동 열기 비활성화)
+   ```
+
+   b. Update config:
+   ```bash
+   Edit: .claude/worktree-config.json
+   # Update "ide" and "autoOpen" fields
+   ```
+
+   c. Confirm:
+   ```
+   ✅ IDE 설정이 업데이트되었습니다!
+
+   선택된 IDE: cursor
+   자동 열기: yes
+   ```
+
+   **Operation 3: 전체 설정 재생성**
+
+   a. Confirm destructive action:
+   ```
+   ⚠️  기존 설정이 삭제되고 기본값으로 재생성됩니다.
+
+   계속하시겠습니까? (yes/no)
+   ```
+
+   b. If yes, delete and recreate:
+   ```bash
+   # Delete existing
+   Bash: rm .claude/worktree-config.json
+
+   # Write default config
+   Write: .claude/worktree-config.json
+   ```
+
+   c. Confirm:
+   ```
+   ✅ 설정이 기본값으로 재생성되었습니다!
+   ```
+
+   **Operation 4: 설정 파일 삭제**
+
+   a. Confirm:
+   ```
+   ⚠️  설정 파일을 삭제하면 앞으로 기본값이 사용됩니다.
+
+   계속하시겠습니까? (yes/no)
+   ```
+
+   b. If yes:
+   ```bash
+   Bash: rm .claude/worktree-config.json
+   ```
+
+   c. Confirm:
+   ```
+   ✅ 설정 파일이 삭제되었습니다.
+
+   앞으로는 다음 기본값이 사용됩니다:
+   - 워크트리 위치: ../{repo}_worktrees
+   - 복사할 파일: .env, .env.local, .claude/, .cursor/, .vscode/
+   - IDE: cursor
+   ```
+
+5. **Create new config (if requested)**
+
+   When user confirms config creation:
+
+   a. Ensure .claude directory exists:
+   ```bash
+   mkdir -p .claude
+   ```
+
+   b. Write default configuration:
+   ```bash
+   Write: .claude/worktree-config.json
+   ```
+
+   Content:
+   ```json
+   {
+     "worktreeDir": "../{repo}_worktrees",
+     "copyFiles": [
+       ".env",
+       ".env.local",
+       ".claude/",
+       ".cursor/",
+       ".vscode/"
+     ],
+     "ide": "cursor",
+     "autoOpen": true,
+     "mainBranch": "main"
+   }
+   ```
+
+   c. Report success:
+   ```
+   ✅ 워크트리 설정이 생성되었습니다!
+
+   설정 위치: .claude/worktree-config.json
+
+   📋 설정 내용:
+   - 워크트리 위치: ../{repo}_worktrees
+   - 복사할 파일: .env, .env.local, .claude/, .cursor/, .vscode/
+   - IDE: cursor (자동 열기)
+   - 메인 브랜치: main
+
+   언제든 "워크트리 설정 업데이트"로 수정할 수 있습니다.
+   ```
+
+---
+
 ## Error Handling
 
 ### Not a Git Repository
@@ -327,14 +573,18 @@ The agent should intelligently decide which skill to invoke based on user intent
 
 | User Request | Detected Intent | Skill to Invoke |
 |--------------|-----------------|-----------------|
-| "worktree 만들어줘 feature-x" | Create with branch name | worktree-create |
-| "worktree 만들어줘" | Create, need branch name | Ask → worktree-create |
+| "worktree 만들어줘 feature-x" | Create with branch name | Check config → worktree-create |
+| "worktree 만들어줘" | Create, need branch name | Ask → Check config → worktree-create |
 | "worktree list" | List | worktree-list |
 | "워크트리 목록" | List | worktree-list |
 | "worktree 병합해줘" | Merge current | Detect branch → worktree-merge |
 | "워크트리 머지" | Merge | Detect branch → worktree-merge |
 | "worktree 정리해줘 feature-x" | Cleanup specific | worktree-cleanup |
 | "worktree 정리해줘" | Cleanup current | Detect branch → worktree-cleanup |
+| "워크트리 설정" | Manage config | Config workflow (Workflow 5) |
+| "worktree 설정 초기화" | Initialize config | Create default config |
+| "워크트리 설정 업데이트" | Update config | Config workflow (Workflow 5) |
+| "복사할 파일 추가해줘" | Modify copyFiles | Config workflow → Operation 1 |
 
 ---
 
