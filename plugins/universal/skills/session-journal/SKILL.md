@@ -1,6 +1,6 @@
 ---
 name: session-journal
-description: Automatic session documentation system for Claude Code workflows. Use when the user says "세션 리뷰", "세션 리뷰해", "세션 정리", "작업 내용 문서화", or similar requests to document the current session. Creates timestamped markdown files in .dev-journal/ with automatic keyword extraction, related session linking, and maintains a searchable index. Automatically invokes decision-tracker skill when significant decisions or critical issues are detected. Prevents CLAUDE.md bloat while preserving cross-session context.
+description: Automatic session documentation system for Claude Code workflows. Use when the user says "세션 리뷰", "세션 리뷰해", "세션 정리", "작업 내용 문서화", or similar requests to document the current session. Creates timestamped markdown files in .dev-docs/sessions/ with automatic keyword extraction, related session linking, and maintains a searchable index. Automatically invokes decision-tracker skill when significant decisions or critical issues are detected. Prevents CLAUDE.md bloat while preserving cross-session context.
 ---
 
 # Session Journal
@@ -24,7 +24,7 @@ Watch for these phrases:
 Analyze the conversation directly and extract 3-8 contextual keywords. **No external scripts needed** - Claude understands context better than NLP algorithms.
 
 **Process**:
-1. Read `.dev-journal/README.md` to load existing keywords and their usage counts
+1. Read `.dev-docs/sessions/README.md` to load existing keywords and their usage counts
 2. Analyze the conversation to identify session topics:
    - **Features**: `ocr-resolution-optimization`, `pdf-viewer-performance`, `subtitle-sync`
    - **Issues**: `impeller-memory-error`, `korean-text-garbled`, `scroll-bug`
@@ -95,9 +95,9 @@ Analyze the conversation directly and extract 3-8 contextual keywords. **No exte
 
 ### 4. Initialize Journal Structure
 
-If `.dev-journal/` doesn't exist:
+If `.dev-docs/sessions/` doesn't exist:
 ```bash
-mkdir -p .dev-journal
+mkdir -p .dev-docs/sessions
 ```
 
 If `README.md` doesn't exist, create it using `references/readme_template.md`.
@@ -106,7 +106,7 @@ If `README.md` doesn't exist, create it using `references/readme_template.md`.
 
 Use `scripts/find_related_sessions.py` to find sessions with overlapping keywords:
 ```bash
-python3 scripts/find_related_sessions.py .dev-journal "keyword1,keyword2,keyword3"
+python3 scripts/find_related_sessions.py .dev-docs/sessions "keyword1,keyword2,keyword3"
 ```
 
 For each result:
@@ -134,7 +134,7 @@ Use template from `references/session_template.md` and populate:
     ```markdown
     ## Key Decisions
     - [Decision description]
-      - **Decision**: [ADR-XXXX: Title](../.dev-decisions/XXXX-slug.md)
+      - **Decision**: [ADR-XXXX: Title](../adr/XXXX-slug.md)
     ```
 - **Code Snippets**: Relevant code examples (optional)
 - **Next Steps**: Follow-up tasks (optional)
@@ -211,7 +211,7 @@ After successfully creating the session document, check if there are uncommitted
 
 **Example**:
 ```
-✅ 세션 문서를 생성했습니다: .dev-journal/20251109_1430_agent-skill-integration.md
+✅ 세션 문서를 생성했습니다: .dev-docs/sessions/20251109_1430_agent-skill-integration.md
 
 현재 커밋되지 않은 변경사항이 있습니다. commit-agent를 실행해서 커밋을 정리할까요?
 ```
@@ -263,14 +263,14 @@ When writing the session document:
 ## File Organization
 
 ```
-/.dev-journal/
+/.dev-docs/sessions/
 ├── README.md                              # Index with all sessions
 ├── 20251108_1430_flutter-riverpod.md     # Session document
 ├── 20251108_1615_stagetext-pdf.md
 └── ...
 ```
 
-Keep all session files flat in `.dev-journal/` - no subdirectories.
+Keep all session files flat in `.dev-docs/sessions/` - no subdirectories.
 
 ## Resources
 

@@ -124,7 +124,7 @@ def find_related_sessions(
     Find related sessions based on keyword matching and semantic analysis.
     
     Args:
-        journal_dir: Path to .dev-journal directory
+        journal_dir: Path to .dev-docs/sessions directory
         current_keywords: Keywords of current session
         current_metadata: Optional metadata dict of current session for deeper analysis
         exclude_file: Optional filename to exclude from results (current session)
