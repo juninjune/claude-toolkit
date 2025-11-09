@@ -104,15 +104,36 @@ If `README.md` doesn't exist, create it using `references/readme_template.md`.
 
 ### 5. Find Related Sessions
 
-Use `scripts/find_related_sessions.py` to find sessions with overlapping keywords:
-```bash
-python3 scripts/find_related_sessions.py .dev-docs/sessions "keyword1,keyword2,keyword3"
-```
+Use Claude Code tools to find sessions with overlapping keywords:
 
-For each result:
-- Read the session file's Summary, Context, and Next Steps sections
-- Determine if truly related based on semantic analysis
-- If related: add to cross-linking list
+**Process**:
+1. Use Grep to search for keyword mentions in session files:
+   ```
+   For each keyword in ["keyword1", "keyword2", "keyword3"]:
+     - Grep pattern: keyword
+     - glob: .dev-docs/sessions/*.md
+     - output_mode: files_with_matches
+   ```
+
+2. Collect candidate session files from Grep results
+
+3. For each candidate file:
+   - Use Read tool to load the session file
+   - Extract Keywords line from metadata
+   - Calculate keyword overlap count
+   - If overlap > 0: add to potential matches
+
+4. For sessions with keyword overlap:
+   - Read Summary, Context, and Next Steps sections
+   - Perform semantic analysis using Claude's understanding:
+     - Check if topics are genuinely related
+     - Look for conceptual connections beyond keyword matching
+     - Consider workflow continuity
+   - If truly related: add to cross-linking list
+
+5. Sort by relevance (keyword overlap + semantic similarity)
+
+**Note**: This approach leverages Claude's built-in tools (Grep, Read) and semantic understanding, eliminating the need for external Python scripts.
 
 ### 6. Generate Session Document
 
@@ -273,9 +294,6 @@ When writing the session document:
 Keep all session files flat in `.dev-docs/sessions/` - no subdirectories.
 
 ## Resources
-
-### scripts/find_related_sessions.py
-Finds related sessions based on keyword overlap and semantic analysis of Summary/Context/Next Steps. Used in Step 4 of the workflow.
 
 ### references/session_template.md
 Template structure for session documents.

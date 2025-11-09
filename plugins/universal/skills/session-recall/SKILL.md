@@ -64,20 +64,34 @@ The most common use case. Users often provide inexact or contextual keywords.
    "문서화" → [documentation, session-journal, adr, markdown]
    ```
 
-3. **Search using the script**:
-   ```bash
-   python scripts/search_sessions.py \
-     --keywords "smart-commit,commit-agent,git" \
-     --journal-dir /path/to/.dev-docs/sessions \
-     --max-results 5
-   ```
+3. **Search using Claude Code tools**:
+   - For each expanded keyword:
+     ```
+     Grep tool:
+       pattern: keyword
+       glob: .dev-docs/sessions/*.md
+       output_mode: files_with_matches
+     ```
+   - Collect all matching session files
 
-4. **Analyze results**:
+4. **Score and rank sessions**:
+   - For each matching session file:
+     - Use Read tool to load metadata
+     - Calculate keyword match score:
+       - Exact keyword match in Keywords line: +10 points
+       - Partial keyword match: +5 points
+     - Calculate recency score:
+       - Parse date from filename (YYYYMMDD)
+       - More recent = higher score (exponential decay)
+     - Total score = keyword_score + (recency_score * 2)
+   - Sort by total score (descending)
+
+5. **Analyze top results**:
    - Review top 3-5 sessions by relevance score
    - Read the "Summary" and "What We Did" sections
-   - Identify most relevant sessions for the user's context
+   - Use Claude's semantic understanding to identify most relevant sessions
 
-5. **Present findings**:
+6. **Present findings**:
    - Session title and date
    - Brief summary of what was done
    - Link to full session file for deeper exploration
@@ -89,9 +103,10 @@ User: "이전에 커밋 정리 관련해서 뭐 했었지?"
 Steps:
 1. Extract: `커밋`, `정리`
 2. Expand: `commit`, `smart-commit`, `commit-agent`, `git`, `organization`
-3. Run search: `--keywords "smart-commit,commit-agent,git,organization"`
-4. Find: `20251109_0503_agent-only-smart-commit.md` (highest score)
-5. Present:
+3. Use Grep to search for each keyword in .dev-docs/sessions/*.md
+4. Read matching files and calculate scores
+5. Find: `20251109_0503_agent-only-smart-commit.md` (highest score)
+6. Present:
    ```
    2025-11-09 05:03에 "smart-commit을 에이전트 전용 스킬로 전환" 작업을 하셨습니다.
 
@@ -123,12 +138,12 @@ Find sessions within a specific time period.
    end_date = today.strftime('%Y%m%d')
    ```
 
-2. **Search by date range**:
-   ```bash
-   python scripts/search_sessions.py \
-     --date-range "20251102,20251109" \
-     --journal-dir /path/to/.dev-docs/sessions
-   ```
+2. **Search by filename pattern**:
+   - Use Glob tool to find sessions in date range:
+     ```
+     Glob pattern: .dev-docs/sessions/202511*.md
+     ```
+   - Filter by date range in filename (YYYYMMDD prefix)
 
 3. **Present chronologically**:
    - List sessions from the period (most recent first)
@@ -141,11 +156,9 @@ Help users resume work from where they left off.
 **Process**:
 
 1. **Get recent sessions** (last 1-3 sessions within 48 hours):
-   ```bash
-   python scripts/search_sessions.py \
-     --recent 3 \
-     --journal-dir /path/to/.dev-docs/sessions
-   ```
+   - Use Glob to list all sessions: `.dev-docs/sessions/*.md`
+   - Sort by filename (timestamp embedded) descending
+   - Take top 1-3 most recent
 
 2. **Read the most recent session file** using the Read tool
 
@@ -171,7 +184,7 @@ Help users resume work from where they left off.
 User: "어제 어디까지 작업했지? 오늘 뭐 하면 될까?"
 
 Steps:
-1. Get recent sessions: `--recent 2`
+1. Use Glob to get recent sessions (sort by filename)
 2. Read most recent: `20251109_0503_agent-only-smart-commit.md`
 3. Parse Next Steps:
    ```markdown
@@ -199,50 +212,30 @@ After retrieving relevant sessions:
 - **Suggest follow-ups**: Based on incomplete "Next Steps" or related work
 - **Offer deeper exploration**: Suggest reading full session files if needed
 
-## Using the Search Script
+## Using Claude Code Tools for Search
 
-The `scripts/search_sessions.py` script is the primary tool for session retrieval.
+This skill uses Claude Code's built-in tools (Grep, Read, Glob) for session retrieval, eliminating external dependencies.
 
-**Keyword search**:
-```bash
-python scripts/search_sessions.py \
-  --keywords "keyword1,keyword2,keyword3" \
-  --journal-dir /path/to/.dev-docs/sessions \
-  --max-results 5
-```
+**Keyword search workflow**:
+1. Use Grep to find files containing keywords
+2. Use Read to extract metadata from matching files
+3. Calculate relevance scores using keyword matching + recency
+4. Sort and present top results
 
-**Date range search**:
-```bash
-python scripts/search_sessions.py \
-  --date-range "20251101,20251109" \
-  --journal-dir /path/to/.dev-docs/sessions
-```
+**Date range search workflow**:
+1. Use Glob with pattern matching (e.g., `202511*.md`)
+2. Filter files by date range from filename
+3. Use Read to extract session details
 
-**Recent sessions**:
-```bash
-python scripts/search_sessions.py \
-  --recent 3 \
-  --journal-dir /path/to/.dev-docs/sessions
-```
+**Recent sessions workflow**:
+1. Use Glob to list all session files
+2. Sort by filename (contains timestamp)
+3. Use Read to load the most recent sessions
 
-**Output format**: JSON with session metadata and scores
-```json
-{
-  "results": [
-    {
-      "filename": "20251109_0503_agent-only-smart-commit.md",
-      "filepath": "/path/to/.dev-docs/sessions/20251109_0503_agent-only-smart-commit.md",
-      "title": "smart-commit을 에이전트 전용 스킬로 전환",
-      "date": "2025-11-09 05:03",
-      "keywords": ["smart-commit", "commit-agent", "agent-only-skill", ...],
-      "summary": "smart-commit 스킬을 에이전트 전용으로 전환...",
-      "score": 15.8,
-      "keyword_score": 15,
-      "recency_score": 0.8
-    }
-  ]
-}
-```
+**Scoring algorithm**:
+- Keyword match: Exact match = +10, Partial match = +5
+- Recency: Exponential decay (recent sessions scored higher)
+- Total score = keyword_score + (recency_score * 2)
 
 ## Reference Documentation
 
