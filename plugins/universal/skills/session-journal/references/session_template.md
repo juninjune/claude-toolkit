@@ -18,7 +18,11 @@ Background and motivation for this work. Why did we start this session?
 
 ## Key Decisions
 - Decision 1 and rationale
+  - **Decision**: [ADR-NNNN: Title](../adr/NNNN-slug.md) (if applicable)
 - Decision 2 and rationale
+
+## Related Milestones
+- [Milestone N: Title](../MILESTONES.md#milestone-n-title) - Brief description of progress made (if applicable)
 
 ## Code Snippets
 ```language

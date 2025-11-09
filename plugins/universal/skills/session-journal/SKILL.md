@@ -93,6 +93,42 @@ Analyze the conversation directly and extract 3-8 contextual keywords. **No exte
 **If not detected:**
 - Continue to next step normally
 
+### 3.5. Detect Milestone Progress
+
+**BEFORE generating session document**, analyze the conversation to detect significant milestone progress that should be tracked in MILESTONES.md.
+
+**Detection criteria:**
+
+1. **Feature Completion**
+   - Major feature fully implemented (e.g., "완전한 파이프라인 구축 완료")
+   - Significant functionality achieved (e.g., "텍스트 추출 시스템 통합 완료")
+   - Phase completion (e.g., "MVP 완성", "베타 버전 출시")
+
+2. **Goal Achievement**
+   - Explicit goal mentions (e.g., "마일스톤 달성", "목표 완료")
+   - Project milestones (e.g., "v1.0 출시", "알파 테스트 완료")
+   - Technical milestones (e.g., "100% 테스트 커버리지 달성")
+
+3. **Significant Progress**
+   - Multiple related features integrated
+   - System architecture completion
+   - Performance/quality targets met
+
+**Detection signals:**
+- Keywords: "마일스톤", "목표 달성", "완료", "milestone", "goal", "achievement", "completed"
+- Feature completion: "기능 구현 완료", "파이프라인 완성", "시스템 통합"
+- Phase transitions: "다음 단계", "새로운 단계", "준비 완료"
+- Quantitative achievements: "100% 달성", "모든 기능 완료", "전체 통합"
+
+**If detected, invoke milestone-tracker:**
+1. Use the Skill tool to invoke milestone-tracker
+2. milestone-tracker will propose milestone creation or update to user
+3. milestone-tracker will return the milestone info (number, title, anchor)
+4. Store this info to add cross-link in session document later
+
+**If not detected:**
+- Continue to next step normally
+
 ### 4. Initialize Journal Structure
 
 If `.dev-docs/sessions/` doesn't exist:
