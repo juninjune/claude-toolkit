@@ -19,6 +19,11 @@ Universal development tools for all projects.
 **Includes:**
 - **smart-commit**: Analyze git changes and create logical, well-structured commits with Conventional Commits format in Korean
 - **session-journal**: Automatic session documentation system with keyword extraction and cross-linking
+- **decision-tracker**: Track critical technical decisions and issues in ADR format (auto-invoked by session-journal)
+- **milestone-tracker**: Track project milestones and goals with progress tracking (auto-invoked by session-journal)
+- **session-recall**: Retrieve and analyze past work sessions based on keywords and time ranges
+- **commit-review**: Analyze commit history to identify refactoring opportunities and verify work-documentation alignment
+- **context-bridge**: Manage context exhaustion with structured session handoff
 
 **Install:**
 ```bash
@@ -28,6 +33,9 @@ Universal development tools for all projects.
 **Usage:**
 - Say "커밋 정리해줘" or "smart commit" when ready to commit changes
 - Say "세션 리뷰" or "세션 정리" to document your work session
+- Say "커밋 리뷰해줘" or "오늘 작업 리뷰해줘" to review commit history and find refactoring opportunities
+- Say "이전에 [주제] 관련해서..." to search past work sessions
+- Context-bridge triggers automatically when token usage exceeds 80%
 
 ## Repository Structure
 
