@@ -1,13 +1,6 @@
 {
   "worktreeDir": "../{repo}_worktrees",
-  "copyFiles": [
-    ".env",
-    ".env.local",
-    ".claude/",
-    ".cursor/",
-    ".vscode/",
-    "CLAUDE.md"
-  ],
+  "copyFiles": [".env", ".env.local", ".claude/", ".cursor/", ".vscode/"],
   "ide": "cursor",
   "autoOpen": true,
   "mainBranch": "main"
