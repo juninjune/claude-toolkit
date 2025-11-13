@@ -1,0 +1,25 @@
+// Domain model template using freezed
+// Replace TemplateName with your actual model name
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'template_name.freezed.dart';
+part 'template_name.g.dart';
+
+@freezed
+class TemplateName with _$TemplateName {
+  const factory TemplateName({
+    required String id,
+    // Add your fields here
+  }) = _TemplateName;
+
+  factory TemplateName.fromJson(Map<String, dynamic> json) =>
+      _$TemplateNameFromJson(json);
+}
+
+// Business logic extensions
+extension TemplateNameExtension on TemplateName {
+  // Add business logic methods here
+  // Example:
+  // bool get isValid => id.isNotEmpty;
+}

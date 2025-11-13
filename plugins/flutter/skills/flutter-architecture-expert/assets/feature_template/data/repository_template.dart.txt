@@ -1,0 +1,112 @@
+// Repository template
+// Replace TemplateName with your actual entity name
+// Replace ApiService with your actual API client
+
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'template_name_repository.g.dart';
+
+class TemplateNameRepository {
+  const TemplateNameRepository(this._apiService);
+  final ApiService _apiService;
+
+  // Fetch operations
+  Future<List<TemplateName>> fetchItems() async {
+    try {
+      final response = await _apiService.get('/endpoint');
+      return (response.data as List)
+          .map((json) => TemplateName.fromJson(json))
+          .toList();
+    } catch (e) {
+      throw FetchItemsException(e.toString());
+    }
+  }
+
+  Future<TemplateName> fetchItem(String id) async {
+    try {
+      final response = await _apiService.get('/endpoint/$id');
+      return TemplateName.fromJson(response.data);
+    } on NotFoundException {
+      throw ItemNotFoundException(id);
+    } catch (e) {
+      throw FetchItemException(id, e.toString());
+    }
+  }
+
+  // Mutation operations
+  Future<void> createItem(TemplateName item) async {
+    try {
+      await _apiService.post('/endpoint', data: item.toJson());
+    } catch (e) {
+      throw CreateItemException(e.toString());
+    }
+  }
+
+  Future<void> updateItem(TemplateName item) async {
+    try {
+      await _apiService.put('/endpoint/${item.id}', data: item.toJson());
+    } catch (e) {
+      throw UpdateItemException(item.id, e.toString());
+    }
+  }
+
+  Future<void> deleteItem(String id) async {
+    try {
+      await _apiService.delete('/endpoint/$id');
+    } catch (e) {
+      throw DeleteItemException(id, e.toString());
+    }
+  }
+}
+
+// Provider definition
+@riverpod
+TemplateNameRepository templateNameRepository(TemplateNameRepositoryRef ref) {
+  return TemplateNameRepository(ref.watch(apiServiceProvider));
+}
+
+// Custom exceptions
+class FetchItemsException implements Exception {
+  const FetchItemsException(this.message);
+  final String message;
+  @override
+  String toString() => 'Failed to fetch items: $message';
+}
+
+class ItemNotFoundException implements Exception {
+  const ItemNotFoundException(this.id);
+  final String id;
+  @override
+  String toString() => 'Item with ID $id not found';
+}
+
+class FetchItemException implements Exception {
+  const FetchItemException(this.id, this.message);
+  final String id;
+  final String message;
+  @override
+  String toString() => 'Failed to fetch item $id: $message';
+}
+
+class CreateItemException implements Exception {
+  const CreateItemException(this.message);
+  final String message;
+  @override
+  String toString() => 'Failed to create item: $message';
+}
+
+class UpdateItemException implements Exception {
+  const UpdateItemException(this.id, this.message);
+  final String id;
+  final String message;
+  @override
+  String toString() => 'Failed to update item $id: $message';
+}
+
+class DeleteItemException implements Exception {
+  const DeleteItemException(this.id, this.message);
+  final String id;
+  final String message;
+  @override
+  String toString() => 'Failed to delete item $id: $message';
+}

@@ -31,6 +31,17 @@
       },
       "keywords": ["git", "worktree", "parallel", "multitasking", "concurrent"],
       "category": "productivity"
+    },
+    {
+      "name": "flutter",
+      "source": "./plugins/flutter",
+      "description": "Flutter development expertise: 4-layer Riverpod architecture, feature-first structure, repository pattern, state management best practices based on Andrea Bizzotto's proven approaches",
+      "version": "1.0.0",
+      "author": {
+        "name": "juninjune"
+      },
+      "keywords": ["flutter", "riverpod", "architecture", "state-management", "repository-pattern", "clean-code", "best-practices"],
+      "category": "development"
     }
   ]
 }

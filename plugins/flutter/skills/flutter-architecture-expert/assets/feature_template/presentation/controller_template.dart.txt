@@ -1,0 +1,51 @@
+// Controller template for mutations
+// Replace TemplateName with your actual entity name
+
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'template_name_controller.g.dart';
+
+@riverpod
+class TemplateNameController extends _$TemplateNameController {
+  @override
+  FutureOr<void> build() {
+    // No initial state for mutation-only controller
+  }
+
+  Future<void> createItem(TemplateName item) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final repo = ref.read(templateNameRepositoryProvider);
+      await repo.createItem(item);
+
+      // Invalidate list to refresh
+      ref.invalidate(itemsListProvider);
+    });
+  }
+
+  Future<void> updateItem(TemplateName item) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final repo = ref.read(templateNameRepositoryProvider);
+      await repo.updateItem(item);
+
+      // Invalidate related providers
+      ref.invalidate(itemProvider(item.id));
+      ref.invalidate(itemsListProvider);
+    });
+  }
+
+  Future<void> deleteItem(String id) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final repo = ref.read(templateNameRepositoryProvider);
+      await repo.deleteItem(id);
+
+      // Invalidate list
+      ref.invalidate(itemsListProvider);
+    });
+  }
+}
