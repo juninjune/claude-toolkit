@@ -4,10 +4,5 @@
   "description": "Flutter development expertise and architecture guidance based on industry best practices",
   "author": {
     "name": "juninjune"
-  },
-  "skills": {
-    "architecture-expert": {
-      "path": "./skills/flutter-architecture-expert"
-    }
   }
 }
